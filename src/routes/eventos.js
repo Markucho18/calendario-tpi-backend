@@ -12,4 +12,30 @@ router.get("/", async (req, res) => {
   }
 })
 
+router.post("/crear", async (req, res) => {
+  try{
+    const {id_usuario, nombre, fecha, hora_inicio, hora_final, categoria, descripcion} = req.body
+    const query = "INSERT INTO eventos (id_usuario, nombre, fecha, hora_inicio, hora_final, categoria, descripcion) VALUES (?, ?, ?, ?, ?, ?, ?)"
+    const results = await pool.query(query, [id_usuario, nombre, fecha, hora_inicio, hora_final, categoria, descripcion])
+    if(results[0].affectedRows === 0) return res.status(500).json({msg: "Hubo un error"})
+    return res.json({msg: "Evento creado correctamente"})
+  } catch(error){
+    console.log(error)
+    return res.status(500).json({msg: "Hubo un error"})
+  }
+})
+
+router.delete("/borrar/:id", async (req, res) => {
+  try{
+    const {id} = req.params
+    const query = "DELETE FROM eventos WHERE id = ?"
+    const results = await pool.query(query, [id])
+    if(results[0].affectedRows === 0) return res.status(500).json({msg: "Hubo un error"})
+    return res.json({msg: "Evento borrado correctamente"})
+  } catch(error){
+    console.log(error)
+    return res.status(500).json({msg: "Hubo un error"})
+  }
+})
+
 module.exports = router

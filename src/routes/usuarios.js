@@ -25,7 +25,7 @@ router.post("/iniciar-sesion", async (req, res) => {
     const refreshToken = crearToken(id, nombre, "7d")
     res.cookie("accessToken", accessToken, {httpOnly: true, secure: false, sameSite: "lax", maxAge: 60 * 60 * 1000})
     res.cookie("refreshToken", refreshToken, {httpOnly: true, secure: false, sameSite: "lax", maxAge: 7 * 24 * 60 * 60 * 1000})
-    return res.json({msg: "Sesion iniciada correctamente"})
+    return res.json({msg: "Sesion iniciada correctamente", datosUsuario: {id, nombre}})
   } catch(error){
     console.log(error)
   }

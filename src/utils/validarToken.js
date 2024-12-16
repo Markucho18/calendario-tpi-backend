@@ -5,7 +5,6 @@ const crearToken = require("./crearToken")
 const validarToken = (req, res, next) => {
   const accessToken = req.cookies?.accessToken
   const refreshToken = req.cookies?.refreshToken
-  console.log({accessToken, refreshToken})
   if(accessToken){
     console.log("Hay accessToken")
     try{
@@ -15,7 +14,7 @@ const validarToken = (req, res, next) => {
       return next()
     } catch(error){
       if(error.name !== "TokenExpiredError"){
-        return res.status(403).json({msg: "accessToken invalido"})
+        return res.status(403).json({msg: "accessToken invalido", tipo: "access"})
       }
       console.log("Expiro el accessToken")
     }
@@ -30,7 +29,7 @@ const validarToken = (req, res, next) => {
       req.usuario = {id, nombre}
       return next()
     } catch(error){
-      return res.status(403).json({ message: "refreshToken invalido" });
+      return res.status(403).json({ msg: "refreshToken invalido", tipo: "refresh"});
     }
   }
   return res.status(401).json({msg: "Debes iniciar sesion de nuevo"})
