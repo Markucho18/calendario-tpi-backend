@@ -10,10 +10,10 @@ const validarToken = require("./utils/validarToken")
 app.use(express.json())
 
 app.use(cors({
-  //Despues poner "http://localhost:5173" y link del frontend en hosting
   origin: true,
-  credentials: true
+  credentials: true,
 }))
+//Despues poner "http://localhost:5173" y link del frontend en hosting
 
 app.use(cookieParser())
 
